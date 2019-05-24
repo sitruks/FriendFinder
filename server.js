@@ -2,13 +2,17 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
+var api = require('./app/routing/apiRoutes')
+var html = require('./app/routing/htmlRoutes')
 
-// Sets up the Express App
+// Set up the Express App
 // =============================================================
 var app = express();
-var PORT = 3000;
+var PORT = 8000;
 
 // Sets up the Express app to handle data parsing
+api.use(api)
+app.use(html)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -16,76 +20,27 @@ app.use(express.json());
 // =============================================================
 var person = [
   {
-    routeName: "yoda",
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
+    "name": "Obi Wan Kenobi",
+    "photo": "",
+    "scores": [
+      5, 4, 1, 1, 5, 8, 9, 10, 3, 7
+    ]
   },
   {
-    routeName: "darthmaul",
-    name: "Darth Maul",
-    role: "Sith Lord",
-    age: 200,
-    forcePoints: 1200
+    "name": "Darth Maul",
+    "photo": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+    "scores": [
+      5, 4, 1, 1, 5, 8, 9, 10, 3, 7
+    ]
   },
   {
-    routeName: "obiwankenobi",
-    name: "Obi Wan Kenobi",
-    role: "Jedi Master",
-    age: 55,
-    forcePoints: 1350
+    "name": "Yoda",
+    "photo": "",
+    "scores": [
+      5, 4, 1, 1, 5, 8, 9, 10, 3, 7
+    ]
   }
 ];
-
-// Routes
-// =============================================================
-
-// Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "home.html"));
-});
-
-app.get("/add", function(req, res) {
-  res.sendFile(path.join(__dirname, "add.html"));
-});
-
-// Displays all people
-app.get("/api/person", function(req, res) {
-  return res.json(person);
-});
-
-// Displays a single person, or returns false
-app.get("/api/person/:friend", function(req, res) {
-  var chosen = req.params.friend;
-
-  console.log(chosen);
-
-  for (var i = 0; i < person.length; i++) {
-    if (chosen === person[i].routeName) {
-      return res.json(person[i]);
-    }
-  }
-
-  return res.json(false);
-});
-
-// Create New People - takes in JSON input
-app.post("/api/person", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body parsing middleware
-  var newcharacter = req.body;
-
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newcharacter);
-
-  person.push(newcharacter);
-
-  res.json(newcharacter);
-});
 
 // Starts the server to begin listening
 // =============================================================
