@@ -1,6 +1,7 @@
 //Use router to create router module
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var potentialFriends = require('../data/friends.js');
+var router = express.Router();
 
 // GET request to display all potential friends in JSON format with /api/friends entered as end point in url
 router.get("/api/friends", function (req, res) {

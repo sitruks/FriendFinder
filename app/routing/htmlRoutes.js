@@ -1,7 +1,7 @@
 //Use router to create router module
-var express = require('express')
+var express = require('express');
 var path = require("path");
-var router = express.Router()
+var router = express.Router();
 
 // Basic route that sends the user first to the home page
 router.get("/", function (req, res) {
