@@ -8,11 +8,11 @@ var html = require('./app/routing/htmlRoutes');
 // Set up the Express App
 // =============================================================
 var app = express();
-var PORT = 8000;
+var PORT = process.env.PORT || 8000;
 
 // Sets up the Express app to handle data parsing
-api.use(api)
-app.use(html)
+api.use(api);
+app.use(html);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
